@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>TinyDice</title>
+        <style>
+        body {
+            margin:0;
+            padding:0;
+        }
+            
+        #history {
+            position:relative;
+            height: 10rem;
+            overflow-y: scroll;
+            background-color: #eaeaea;
+            color: black;
+            font-family: courier;
+        }
+        </style>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <script>
+            var socket = io();
+            var result = "";
+            $(function() {
+                socket.emit("status",{});
+            });
+            $(document).on("click","#frmDice button",function(ev) {
+                ev.preventDefault;
+                var dicetype=$(this).data("dice");
+                if (dicetype == "status") {
+                    socket.emit("status", {} );
+                } else {
+                    socket.emit("diceroll",dicetype);
+                }
+            });
+                
+            socket.on("diceroll",function(msg) {
+                $message = "";
+                $.each(msg,function(i,v) {
+                    $message+="Roll:"+v.dicetype+" Result:"+v.result+"<br/>";
+                });
+                $("#history").html($message);
+            });
+            socket.on("status", function(msg) {
+                $message = "";
+                $.each(msg,function(i,v) {
+                    $message+="Roll:"+v.dicetype+" Result:"+v.result+"<br/>";
+                });
+                $("#history").html($message);
+            });
+        </script>
+    </head>
+    <body>
+        <div id="history"></div>
+        <form name="frmDice" id="frmDice">
+            <button type="button" data-dice="d6">Roll D6</button>
+            <button type="button" data-dice="d10">Roll D10</button>
+            <button type="button" data-dice="d20">Roll D20</button>
+            <button type="button" data-dice="d100">Roll D100</button>
+            <button type="button" data-dice="status">Refresh</button>
+        </form>
+    </body>
+</html>
