@@ -46,6 +46,6 @@ io.on('connection', function(socket){
 });
 
 
-server.listen(3000, function() {
+server.listen(app.get('port'), app.get('ipaddress'), function() {
     console.log("Listening on...");
 });
