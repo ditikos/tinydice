@@ -3,11 +3,18 @@
     <head>
         <meta charset="utf-8"/>
         <title>TinyDice</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"/>
         <style>
         body {
             margin:0;
             padding:0;
+            margin-top: 1rem;
         }
+            
+            ul {
+                list-style-position: inside;
+            }
             
         #history {
             position:relative;
@@ -20,6 +27,7 @@
         </style>
         <script src="/socket.io/socket.io.js"></script>
         <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
         <script>
             //var socket = io.connect("http://tinydice-ditikos.rhcloud.com:8000");
             var socket = io();
@@ -32,6 +40,8 @@
                 var dicetype=$(this).data("dice");
                 if (dicetype == "status") {
                     socket.emit("status", {} );
+                } else if (dicetype == "clear") {
+                    socket.emit("clear",{});
                 } else {
                     socket.emit("diceroll",dicetype);
                 }
@@ -40,27 +50,36 @@
             socket.on("diceroll",function(msg) {
                 $message = "";
                 $.each(msg,function(i,v) {
-                    $message+="Roll:"+v.dicetype+" Result:"+v.result+"<br/>";
+                    $message+="["+v.time+"] Roll:"+v.dicetype+" Result:"+v.result+"<br/>";
                 });
                 $("#history").html($message);
             });
             socket.on("status", function(msg) {
                 $message = "";
                 $.each(msg,function(i,v) {
-                    $message+="Roll:"+v.dicetype+" Result:"+v.result+"<br/>";
+                    $message+="["+v.time+"] Roll:"+v.dicetype+" Result:"+v.result+"<br/>";
                 });
                 $("#history").html($message);
             });
         </script>
     </head>
     <body>
+        <div class="container">
         <div id="history"></div>
+        <p>Instructions:<br/>
+            <ul>
+            <li>Use the Dice Handlers to roll a dice.</li>
+            <li>Scroll the Dice Area to see what you threw.</li>
+            </ul>
+        </p>
         <form name="frmDice" id="frmDice">
-            <button type="button" data-dice="d6">Roll D6</button>
-            <button type="button" data-dice="d10">Roll D10</button>
-            <button type="button" data-dice="d20">Roll D20</button>
-            <button type="button" data-dice="d100">Roll D100</button>
-            <button type="button" data-dice="status">Refresh</button>
+            <button class="btn btn-default" type="button" data-dice="d6">Roll D6</button>
+            <button class="btn btn-default" type="button" data-dice="d10">Roll D10</button>
+            <button class="btn btn-default" type="button" data-dice="d20">Roll D20</button>
+            <button class="btn btn-default" type="button" data-dice="d100">Roll D100</button>
+            <button class="btn btn-warning" type="button" data-dice="status">Refresh</button>
+            <button class="btn btn-danger" type="button" data-dice="clear">Clear stack</button>
         </form>
+            </div>
     </body>
 </html>

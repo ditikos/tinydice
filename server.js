@@ -18,7 +18,7 @@ var archive = [];
 var usernum = 1;
 
 io.on('connection', function(socket){
-    console.log('a user connected');
+    //console.log('a user connected');
     socket.on("diceroll",function(msg) {
         if (msg==="d6") {
             result = Math.floor((Math.random() * 6) + 1); 
@@ -32,14 +32,24 @@ io.on('connection', function(socket){
         if (msg==="d100") {
             result = Math.floor((Math.random() * 100) + 1); 
         }        
-        var obj = { "dicetype": msg, "result": result };
-        console.log(obj);
+var d = new Date,
+    dformat = [(d.getMonth()+1).padLeft(),
+               d.getDate().padLeft(),
+               d.getFullYear()].join('/') +' ' +
+              [d.getHours().padLeft(),
+               d.getMinutes().padLeft(),
+               d.getSeconds().padLeft()].join(':');      
+        var obj = { "time":dformat, "dicetype": msg, "result": result };
         archive.push(obj);
-        console.log(archive);
-        //io.emit("diceroll",archive);
         io.emit("diceroll", archive);
     });
     socket.on("status",function(msg) {
+        io.emit("status",archive);
+    });
+    
+    socket.on("clear", function(msg) {
+        // http://stackoverflow.com/questions/1232040/how-to-empty-an-array-in-javascript
+        while (archive.length) { archive.pop(); }
         io.emit("status",archive);
     });
     usernum++;
@@ -47,5 +57,11 @@ io.on('connection', function(socket){
 
 
 server.listen(PORT, IPADDRESS, function() {
-    console.log("Listening on...");
+    console.log("Listening on..."+IPADDRESS+":"+PORT);
 });
+
+
+Number.prototype.padLeft = function(base,chr){
+    var  len = (String(base || 10).length - String(this).length)+1;
+    return len > 0? new Array(len).join(chr || '0')+this : this;
+}
