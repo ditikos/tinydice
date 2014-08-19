@@ -21,7 +21,8 @@
         <script src="/socket.io/socket.io.js"></script>
         <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
         <script>
-            var socket = io.connect("http://tinydice-ditikos.rhcloud.com:8000");
+            //var socket = io.connect("http://tinydice-ditikos.rhcloud.com:8000");
+            var socket = io();
             var result = "";
             $(function() {
                 socket.emit("status",{});

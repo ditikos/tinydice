@@ -1,14 +1,14 @@
 /*var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);*/
+
+var PORT = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var IPADDRESS = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+
 var express = require('express'),
     app = express(),
     server = require('http').createServer(app),
     io = require("socket.io").listen(server);
-
-app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 8080);
-app.set('ipaddr', process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1");
-
 
 app.get('/', function(req, res) {
     res.sendFile(__dirname+"/client/index.html");
@@ -46,6 +46,6 @@ io.on('connection', function(socket){
 });
 
 
-server.listen(app.get('port'), app.get('ipaddress'), function() {
+server.listen(PORT, IPADDRESS, function() {
     console.log("Listening on...");
 });
