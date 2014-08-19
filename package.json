@@ -1,9 +1,13 @@
 {
-  "name": "tinydice",
-  "description": "a dice server interface in node.js",
-  "version": "0.0.1",
-  "dependencies": {
-    "express": "^4.8.5",
-    "socket.io": "^1.0.6"
-  }
+    "name": "tinydice",
+    "description": "a dice server interface in node.js",
+    "version": "0.0.2",
+    "dependencies": {
+        "express": "^4.8.5",
+        "socket.io": "^1.0.6"
+    },
+    "scripts": {
+        "start": "node server.js"
+    },
+    "main":"server.js"
 }
