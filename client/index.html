@@ -65,21 +65,26 @@
     </head>
     <body>
         <div class="container">
-        <div id="history"></div>
-        <p>Instructions:<br/>
-            <ul>
-            <li>Use the Dice Handlers to roll a dice.</li>
-            <li>Scroll the Dice Area to see what you threw.</li>
-            </ul>
-        </p>
-        <form name="frmDice" id="frmDice">
-            <button class="btn btn-default" type="button" data-dice="d6">Roll D6</button>
-            <button class="btn btn-default" type="button" data-dice="d10">Roll D10</button>
-            <button class="btn btn-default" type="button" data-dice="d20">Roll D20</button>
-            <button class="btn btn-default" type="button" data-dice="d100">Roll D100</button>
-            <button class="btn btn-warning" type="button" data-dice="status">Refresh</button>
-            <button class="btn btn-danger" type="button" data-dice="clear">Clear stack</button>
-        </form>
+            <div id="history"></div>
+            <div class="row">
+                Instructions:
+                <ul>
+                    <li>Use the Dice Handlers to roll a dice.</li>
+                    <li>Scroll the Dice Area to see what you threw.</li>
+                </ul>            
             </div>
+            <form name="frmDice" id="frmDice">
+                <button class="btn btn-default" type="button" data-dice="d4">Roll D4</button>
+                <button class="btn btn-default" type="button" data-dice="d6">Roll D6</button>
+                <button class="btn btn-default" type="button" data-dice="d6">Roll D8</button>
+                <button class="btn btn-default" type="button" data-dice="d10">Roll D10</button>
+                <button class="btn btn-default" type="button" data-dice="d12">Roll D12</button>
+
+                <button class="btn btn-default" type="button" data-dice="d20">Roll D20</button>
+                <button class="btn btn-default" type="button" data-dice="dp">Roll D10 %</button>
+                <button class="btn btn-warning" type="button" data-dice="status">Refresh</button>
+                <button class="btn btn-danger" type="button" data-dice="clear">Clear stack</button>
+            </form>
+        </div>
     </body>
 </html>

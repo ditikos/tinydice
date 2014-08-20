@@ -20,17 +20,26 @@ var usernum = 1;
 io.on('connection', function(socket){
     //console.log('a user connected');
     socket.on("diceroll",function(msg) {
+        if (msg==="d4") {
+            result = Math.floor((Math.random() * 4) + 1); 
+        }
         if (msg==="d6") {
             result = Math.floor((Math.random() * 6) + 1); 
         }
+        if (msg==="d8") {
+            result = Math.floor((Math.random() * 8) + 1); 
+        }        
         if (msg==="d10") {
             result = Math.floor((Math.random() * 10) + 1); 
+        }        
+        if (msg==="d12") {
+            result = Math.floor((Math.random() * 6) + 1); 
         }        
         if (msg==="d20") {
             result = Math.floor((Math.random() * 20) + 1); 
         }        
-        if (msg==="d100") {
-            result = Math.floor((Math.random() * 100) + 1); 
+        if (msg==="dp") {
+            result = Math.floor((Math.random() * 10) + 1)*10; 
         }        
 var d = new Date,
     dformat = [(d.getMonth()+1).padLeft(),
